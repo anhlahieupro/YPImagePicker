@@ -19,6 +19,8 @@ public struct YPImagePickerConfiguration {
     
     public init() {}
     
+    public var isHiddenGrid: Bool?
+    
     /// Scroll to change modes, defaults to true
     public var isScrollToChangeModesEnabled = true
     
@@ -156,6 +158,8 @@ public struct YPImagePickerConfiguration {
 
 /// Encapsulates library specific settings.
 public struct YPConfigLibrary {
+    
+    public var heightOfAssetViewContainer: CGFloat = UIScreen.main.bounds.width
     
     public var options: PHFetchOptions? = nil
     

@@ -8,7 +8,7 @@
 
 import Stevia
 
-class YPGridView: UIView {
+open class YPGridView: UIView {
     
     let line1 = UIView()
     let line2 = UIView()

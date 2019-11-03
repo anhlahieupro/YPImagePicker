@@ -12,7 +12,7 @@ import Stevia
 import AVFoundation
 
 /// The container for asset (video or image). It containts the YPGridView and YPAssetZoomableView.
-class YPAssetViewContainer: UIView {
+open class YPAssetViewContainer: UIView {
     public var zoomableView: YPAssetZoomableView?
     public let grid = YPGridView()
     public let curtain = UIView()
@@ -26,7 +26,7 @@ class YPAssetViewContainer: UIView {
     private var shouldCropToSquare = true
     private var isMultipleSelection = false
 
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         
         addSubview(grid)
@@ -40,7 +40,7 @@ class YPAssetViewContainer: UIView {
             }
         }
         
-        grid.alpha = 0
+        hideGrid()
         
         let touchDownGR = UILongPressGestureRecognizer(target: self,
                                                        action: #selector(handleTouchDown))
@@ -81,7 +81,6 @@ class YPAssetViewContainer: UIView {
         multipleSelectionButton-15-|
         multipleSelectionButton.setImage(YPConfig.icons.multipleSelectionOffIcon, for: .normal)
         multipleSelectionButton.Bottom == zoomableView!.Bottom - 15
-        
     }
     
     // MARK: - Square button
@@ -96,17 +95,9 @@ class YPAssetViewContainer: UIView {
     
     
     public func refreshSquareCropButton() {
-        if onlySquare {
-            squareCropButton.isHidden = true
-        } else {
-            if let image = zoomableView?.assetImageView.image {
-                let isImageASquare = image.size.width == image.size.height
-                squareCropButton.isHidden = isImageASquare
-            }
-        }
-        
-        let shouldFit = YPConfig.library.onlySquare ? true : shouldCropToSquare
-        zoomableView?.fitImage(shouldFit)
+        zoomableView?.fitImage(false, animated: false)
+        zoomableView?.alpha = 0
+        UIView.animate(withDuration: 0.3) { [weak self] in self?.zoomableView?.alpha = 1 }
     }
     
     // MARK: - Multiple selection
@@ -140,14 +131,14 @@ extension YPAssetViewContainer: YPAssetZoomableViewDelegate {
     public func ypAssetZoomableViewScrollViewDidZoom() {
         if isShown {
             UIView.animate(withDuration: 0.1) {
-                self.grid.alpha = 1
+                self.showGrid()
             }
         }
     }
     
     public func ypAssetZoomableViewScrollViewDidEndZooming() {
         UIView.animate(withDuration: 0.3) {
-            self.grid.alpha = 0
+            self.hideGrid()
         }
     }
 }
@@ -169,14 +160,28 @@ extension YPAssetViewContainer: UIGestureRecognizerDelegate {
         case .began:
             if isShown {
                 UIView.animate(withDuration: 0.1) {
-                    self.grid.alpha = 1
+                    self.showGrid()
                 }
             }
         case .ended:
             UIView.animate(withDuration: 0.3) {
-                self.grid.alpha = 0
+                self.hideGrid()
             }
         default: ()
         }
+    }
+}
+
+public extension YPAssetViewContainer {
+    func showGrid() {
+        if let isHiddenGrid = YPConfig.isHiddenGrid, isHiddenGrid {
+            hideGrid()
+            return
+        }
+        grid.alpha = 1
+    }
+    
+    func hideGrid() {
+        grid.alpha = 0
     }
 }

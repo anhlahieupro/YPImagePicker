@@ -533,4 +533,8 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
+    
+    public func getYPLibraryView() -> YPLibraryView {
+        return v
+    }
 }

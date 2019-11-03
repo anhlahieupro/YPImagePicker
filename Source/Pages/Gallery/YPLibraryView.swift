@@ -10,7 +10,7 @@ import UIKit
 import Stevia
 import Photos
 
-final class YPLibraryView: UIView {
+open class YPLibraryView: UIView {
     
     let assetZoomableViewMinimalVisibleHeight: CGFloat  = 50
     
@@ -18,13 +18,14 @@ final class YPLibraryView: UIView {
     @IBOutlet weak var assetZoomableView: YPAssetZoomableView!
     @IBOutlet weak var assetViewContainer: YPAssetViewContainer!
     @IBOutlet weak var assetViewContainerConstraintTop: NSLayoutConstraint!
+    @IBOutlet weak var heightOfAssetViewContainer: NSLayoutConstraint!
     
     let maxNumberWarningView = UIView()
     let maxNumberWarningLabel = UILabel()
     let progressView = UIProgressView()
     let line = UIView()
     
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         
         sv(
@@ -37,6 +38,8 @@ final class YPLibraryView: UIView {
         )
         
         line.backgroundColor = .white
+        
+        heightOfAssetViewContainer.constant = YPConfig.library.heightOfAssetViewContainer
         
         setupMaxNumberOfItemsView()
         setupProgressBarView()
@@ -99,7 +102,7 @@ extension YPLibraryView {
     // MARK: - Grid
     
     func hideGrid() {
-        assetViewContainer.grid.alpha = 0
+        assetViewContainer.hideGrid()
     }
     
     // MARK: - Loader and progress
@@ -144,5 +147,13 @@ extension YPLibraryView {
     func cellSize() -> CGSize {
         let size = UIScreen.main.bounds.width/4 * UIScreen.main.scale
         return CGSize(width: size, height: size)
+    }
+    
+    public func getYPAssetZoomableView() -> YPAssetZoomableView {
+        return assetZoomableView
+    }
+    
+    public func getYPAssetViewContainer() -> YPAssetViewContainer {
+        return assetViewContainer
     }
 }
