@@ -167,8 +167,16 @@ extension YPImagePicker: ImagePickerDelegate {
 }
 
 public extension YPImagePicker {
+    func getYPPickerVC() -> YPPickerVC? {
+        return picker
+    }
+    
+    func getYPLibraryVC() -> YPLibraryVC? {
+        return picker.libraryVC
+    }
+    
     func getYPLibraryView() -> YPLibraryView? {
-        return picker.libraryVC?.getYPLibraryView()
+        return getYPLibraryVC()?.getYPLibraryView()
     }
     
     func getYPAssetZoomableView() -> YPAssetZoomableView? {
