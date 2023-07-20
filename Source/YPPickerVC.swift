@@ -272,18 +272,35 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     func updateUI() {
         if !YPConfig.hidesCancelButton {
             // Update Nav Bar state.
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: YPConfig.wordings.cancel,
-                                                               style: .plain,
-                                                               target: self,
-                                                               action: #selector(close))
+            
+            if let image = YPConfig.icons.YPPickerVcLeftBarButtonItem {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(image: image,
+                                                                   style: .plain,
+                                                                   target: self,
+                                                                   action: #selector(close))
+            } else {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(title: YPConfig.wordings.cancel,
+                                                                   style: .plain,
+                                                                   target: self,
+                                                                   action: #selector(close))
+            }
         }
         switch mode {
         case .library:
             setTitleViewWithTitle(aTitle: libraryVC?.title ?? "")
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: YPConfig.wordings.next,
-                                                                style: .done,
-                                                                target: self,
-                                                                action: #selector(done))
+            
+            if let image = YPConfig.icons.YPPickerVcRightBarButtonItem {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,
+                                                                    style: .done,
+                                                                    target: self,
+                                                                    action: #selector(done))
+            } else {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: YPConfig.wordings.next,
+                                                                    style: .done,
+                                                                    target: self,
+                                                                    action: #selector(done))
+            }
+            
             navigationItem.rightBarButtonItem?.tintColor = YPConfig.colors.tintColor
 
             // Disable Next Button until minNumberOfItems is reached.

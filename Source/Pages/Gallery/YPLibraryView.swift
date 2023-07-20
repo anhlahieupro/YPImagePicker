@@ -10,7 +10,7 @@ import UIKit
 import Stevia
 import Photos
 
-internal final class YPLibraryView: UIView {
+public final class YPLibraryView: UIView {
 
     // MARK: - Public vars
 
@@ -81,6 +81,9 @@ internal final class YPLibraryView: UIView {
             }
         }
     }
+    
+    // MARK: - PROS2
+    public static var prosHeaderView: UIView!
 
     // MARK: - Init
 
@@ -167,6 +170,10 @@ internal final class YPLibraryView: UIView {
     // MARK: - Private Methods
 
     private func setupLayout() {
+        if YPLibraryView.prosHeaderView == nil {
+            YPLibraryView.prosHeaderView = UIView(frame: .zero)
+        }
+        
         subviews(
             collectionContainerView.subviews(
                 collectionView
@@ -178,7 +185,9 @@ internal final class YPLibraryView: UIView {
             progressView,
             maxNumberWarningView.subviews(
                 maxNumberWarningLabel
-            )
+            ),
+            
+            YPLibraryView.prosHeaderView
         )
 
         collectionContainerView.fillContainer()
@@ -200,5 +209,12 @@ internal final class YPLibraryView: UIView {
         |maxNumberWarningView|.bottom(0)
         maxNumberWarningView.Top == safeAreaLayoutGuide.Bottom - 40
         maxNumberWarningLabel.centerHorizontally().top(11)
+        
+        assetViewContainer.Bottom == YPLibraryView.prosHeaderView.Top
+        collectionView.contentInset = UIEdgeInsets(top: YPLibraryView.prosHeaderView.bounds.height,
+                                                   left: 0, bottom: 0, right: 0)
+        
+        YPLibraryView.prosHeaderView.fillHorizontally()
+        YPLibraryView.prosHeaderView.height(YPLibraryView.prosHeaderView.bounds.height)
     }
 }
