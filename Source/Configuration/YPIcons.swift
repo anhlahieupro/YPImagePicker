@@ -28,6 +28,7 @@ public struct YPIcons {
     public var playImage: UIImage = imageFromBundle("yp_play")
     public var removeImage: UIImage = imageFromBundle("yp_remove")
     
+    // MARK: - PROS2
     public var YPPickerVcLeftBarButtonItem: UIImage?
     public var YPPickerVcRightBarButtonItem: UIImage?
 }

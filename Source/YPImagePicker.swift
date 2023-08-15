@@ -161,6 +161,7 @@ open class YPImagePicker: UINavigationController {
     }
     
     private func setupLoadingView() {
+        // MARK: - PROS2
         //        view.subviews(
         //            loadingView
         //        )

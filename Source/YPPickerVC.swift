@@ -270,6 +270,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     }
     
     func updateUI() {
+        // MARK: - PROS2
         if !YPConfig.hidesCancelButton {
             // Update Nav Bar state.
             
