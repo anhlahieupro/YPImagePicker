@@ -96,7 +96,11 @@ class LibraryMediaManager {
                 guard let asset = asset else { ypLog("Don't have the asset"); return }
                 
                 let assetComposition = AVMutableComposition()
-                let assetMaxDuration = self.getMaxVideoDuration(between: duration, andAssetDuration: asset.duration)
+                
+                // MARK: - PROS2
+                // let assetMaxDuration = self.getMaxVideoDuration(between: duration, andAssetDuration: asset.duration)
+                let assetMaxDuration = duration ?? asset.duration
+                
                 let trackTimeRange = CMTimeRangeMake(start: CMTime.zero, duration: assetMaxDuration)
                 
                 // 1. Inserting audio and video tracks in composition

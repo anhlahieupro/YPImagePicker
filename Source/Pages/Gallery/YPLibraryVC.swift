@@ -331,16 +331,17 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
             return true
         }
         
-        let tooLong = floor(asset.duration) > YPConfig.video.libraryTimeLimit
-        let tooShort = floor(asset.duration) < YPConfig.video.minimumTimeLimit
-        
-        if tooLong || tooShort {
-            DispatchQueue.main.async {
-                let alert = tooLong ? YPAlert.videoTooLongAlert(self.view) : YPAlert.videoTooShortAlert(self.view)
-                self.present(alert, animated: true, completion: nil)
-            }
-            return false
-        }
+        // MARK: - PROS2
+        //        let tooLong = floor(asset.duration) > YPConfig.video.libraryTimeLimit
+        //        let tooShort = floor(asset.duration) < YPConfig.video.minimumTimeLimit
+        //
+        //        if tooLong || tooShort {
+        //            DispatchQueue.main.async {
+        //                let alert = tooLong ? YPAlert.videoTooLongAlert(self.view) : YPAlert.videoTooShortAlert(self.view)
+        //                self.present(alert, animated: true, completion: nil)
+        //            }
+        //            return false
+        //        }
         
         return true
     }
@@ -426,7 +427,10 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
                                                duration: Double,
                                                callback: @escaping (_ videoURL: URL?) -> Void) {
         delegate?.libraryViewDidTapNext()
-        let timeDuration = CMTimeMakeWithSeconds(duration, preferredTimescale: 1000)
+        
+        // MARK: PROS2
+        let timeDuration = CMTimeMakeWithSeconds(duration, preferredTimescale: 1)
+        
         mediaManager.fetchVideoUrlAndCropWithDuration(for: asset,
                                                       cropRect: rect,
                                                       duration: timeDuration,

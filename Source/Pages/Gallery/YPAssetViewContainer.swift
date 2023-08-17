@@ -86,11 +86,12 @@ final class YPAssetViewContainer: UIView {
             |-15-squareCropButton
             squareCropButton.Bottom == self.Bottom - 15
         }
-
+        
+        // MARK: - PROS2
         // Multiple selection button
-        subviews(multipleSelectionButton)
-        multipleSelectionButton.size(42).trailing(15)
-        multipleSelectionButton.Bottom == self.Bottom - 15
+        //        subviews(multipleSelectionButton)
+        //        multipleSelectionButton.size(42).trailing(15)
+        //        multipleSelectionButton.Bottom == self.Bottom - 15
     }
 
     required init?(coder: NSCoder) {
