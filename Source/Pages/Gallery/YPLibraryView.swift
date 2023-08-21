@@ -134,7 +134,11 @@ public final class YPLibraryView: UIView {
     }
 
     func updateProgress(_ progress: Float) {
-        progressView.isHidden = progress > 0.99 || progress == 0
+        
+        // MARK: PROS2
+        // progressView.isHidden = progress > 0.99 || progress == 0
+        progressView.isHidden = true
+        
         progressView.progress = progress
         UIView.animate(withDuration: 0.1, animations: progressView.layoutIfNeeded)
     }
