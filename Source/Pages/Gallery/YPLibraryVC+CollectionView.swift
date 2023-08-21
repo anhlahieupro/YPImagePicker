@@ -168,7 +168,12 @@ extension YPLibraryVC: UICollectionViewDelegate {
         let previouslySelectedIndexPath = IndexPath(row: currentlySelectedIndex, section: 0)
         currentlySelectedIndex = indexPath.row
 
-        changeAsset(mediaManager.getAsset(at: indexPath.row))
+        // MARK: PROS2
+        let newAsset = mediaManager.getAsset(at: indexPath.row)
+        if v.assetZoomableView.getCurrentAsset()?.localIdentifier != newAsset?.localIdentifier {
+            changeAsset(newAsset)
+        }
+                
         panGestureHelper.resetToOriginalState()
         
         // Only scroll cell to top if preview is hidden.

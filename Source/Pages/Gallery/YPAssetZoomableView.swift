@@ -27,6 +27,11 @@ final class YPAssetZoomableView: UIScrollView {
     
     fileprivate var currentAsset: PHAsset?
     
+    // MARK: PROS2
+    func getCurrentAsset() -> PHAsset? {
+        currentAsset
+    }
+    
     // Image view of the asset for convenience. Can be video preview image view or photo image view.
     public var assetImageView: UIImageView {
         return isVideoMode ? videoView.previewImageView : photoImageView
