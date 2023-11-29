@@ -9,6 +9,44 @@
 import UIKit
 import Photos
 
+// MARK: - PROS2
+public struct YPFileManager {
+    public static var tempPath: String {
+        FileManager.tempPath
+    }
+    public static func removeTemp() {
+        FileManager.removeTemp()
+    }
+}
+extension FileManager {
+    class var tempPath: String {
+        var tempPath = NSTemporaryDirectory()
+        tempPath.append(contentsOf: "com.yummypets.YPIPExample/")
+        folderExists(atPath: tempPath)
+        return tempPath
+    }
+    static func folderExists(atPath path: String) {
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: path) {
+            try? fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+        }
+    }
+    class func removeTemp() {
+        removeFile(filePath: tempPath)
+    }
+    @discardableResult
+    static func removeFile(filePath: String) -> Bool {
+        do {
+            if FileManager.default.fileExists(atPath: filePath) {
+                try FileManager.default.removeItem(atPath: filePath)
+            }
+            return true
+        } catch {
+            return false
+        }
+    }
+}
+
 class LibraryMediaManager {
     
     weak var v: YPLibraryView?
@@ -145,7 +183,7 @@ class LibraryMediaManager {
                 
                 // 5. Configuring export session
                 
-                let fileURL = URL(fileURLWithPath: NSTemporaryDirectory())
+                let fileURL = URL(fileURLWithPath: FileManager.tempPath)
                     .appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
                 let exportSession = assetComposition
                     .export(to: fileURL,

@@ -411,7 +411,8 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
             return
         }
         
-        if YPConfig.video.automaticTrimToTrimmerMaxDuration {
+        // MARK: - PROS2
+        if YPConfig.video.automaticTrimToTrimmerMaxDuration && asset.duration > YPConfig.video.trimmerMaxDuration {
             fetchVideoAndCropWithDuration(for: asset,
                                           withCropRect: resultCropRect,
                                           duration: YPConfig.video.trimmerMaxDuration,
