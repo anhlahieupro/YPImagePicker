@@ -10,6 +10,8 @@ import UIKit
 import Photos
 import PhotosUI
 
+public var YPLibraryVCShowEmptyMessage: (() -> ())?
+
 internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
     internal weak var delegate: YPLibraryViewDelegate?
     internal var v = YPLibraryView(frame: .zero)
@@ -564,6 +566,8 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
                     ypLog("unknown default reached. Check code.")
                 }
                 return
+            } else {
+                YPLibraryVCShowEmptyMessage?()
             }
         }
     }
@@ -589,6 +593,7 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
     
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
+        YPLibraryVCShowEmptyMessage = nil
         ypLog("\(type(of: self)) deinited 👌🏻")
     }
 }
